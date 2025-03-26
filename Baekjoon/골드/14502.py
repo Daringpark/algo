@@ -1,6 +1,4 @@
-
 # BOJ 14502 연구소 골드 4
-
 import sys
 from collections import deque
 input = sys.stdin.readline
@@ -34,7 +32,7 @@ def combination(level, start, wall):
     for i in range(start, total_space):
         if not space_visited[i]:
             space_visited[i] = 1
-            combination(level+1, i+1, wall + [space[i]])
+            combination(level + 1, i + 1, wall + [space[i]])
             space_visited[i] = 0
 
 def bfs():
@@ -56,25 +54,20 @@ def bfs():
                         queue.append((new_row, new_col))
                         visited[new_row][new_col] = 1
                         cnt += 1
-
     return cnt
 
 N, M = map(int, input().split())
 matrix = [list(map(int, input().split())) for _ in range(N)]
 drdc = [(-1,0), (0,1), (1,0), (0,-1)]
 
-# BFS 돌릴 용도
+# BFS를 돌리면서 기둥 고르기
 virus = []
+space = []
 for i in range(N):
     for j in range(M):
         if matrix[i][j] == 2:
             virus.append((i,j))
-
-# 기둥을 고를 용도
-space = []
-for i in range(N):
-    for j in range(N):
-        if not matrix[i][j]:
+        elif matrix[i][j] == 0:
             space.append((i,j))
 total_space = len(space)
 space_visited = [0] * total_space
@@ -82,29 +75,3 @@ space_visited = [0] * total_space
 max_value = 0
 combination(0, 0, [])
 print(max_value)
-
-'''
-3 3
-2 0 2
-1 0 0
-0 0 0
->> 3
-
-4 6
-0 0 0 0 0 0
-1 0 0 0 0 2
-1 1 1 0 0 2
-0 0 0 0 0 2
- >> 9
-
-0 0 0 0 1 0
-1 0 0 1 0 2
-1 1 1 0 0 2
-0 0 0 1 0 2
- >> 9
-17 - 8 = 9
-(3+5)
-
-17 -3 -5
-
-'''
